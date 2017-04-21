@@ -3,11 +3,15 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <form runat="server">
-        Email: <input id="Text1" type="text" /><br />
-        Password: <input id="Text2" type="password" /><br />
-        FirstName: <input id="Text3" type="text" /><br />
-        LastName: <input id="Text4" type="text" /><br />
-        <input id="Submit1" type="submit" value="Submit" />
+    <% foreach (Object err in errors) { %>
+        <li><%: err %></li>
+    <% } %>
+    <form id="register" runat="server">
+        Email: <asp:TextBox ID="Email" runat="server"></asp:TextBox><br />
+        Password: <asp:TextBox ID="Password" TextMode="Password" runat="server"></asp:TextBox><br />
+        Confirm Password: <asp:TextBox ID="Confirm_Password" TextMode="Password" runat="server"></asp:TextBox><br />
+        FirstName: <asp:TextBox ID="First_Name" TextMode="Password" runat="server"></asp:TextBox><br />
+        LastName: <asp:TextBox ID="Last_Name" TextMode="Password" runat="server"></asp:TextBox><br />
+        <asp:Button ID="Button1" runat="server" Text="Register" OnClick="Register_Submit" />
     </form>
 </asp:Content>

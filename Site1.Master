@@ -4,12 +4,19 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title>Todo List</title>
+    <title><%: Page.Title %> Todo List</title>
     <link rel="shortcut icon" type="image/png" href="/images/icon.png" />
+    <link rel="stylesheet" href="/css/main.css" type="text/css" />
+    <script src="/js/main.js"></script>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
 <body>
+    <div class="nav">
+        <a href="/">Home</a>
+        <a href="/Login.aspx">Login</a>
+        <a href="/Register.aspx">Register</a>
+    </div>
     <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
 
     </asp:ContentPlaceHolder>
