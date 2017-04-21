@@ -4,7 +4,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title><%: Page.Title %> Todo List</title>
+    <title><%: !String.IsNullOrEmpty(Page.Title) ? Page.Title + " - " : null %>Todo</title>
     <link rel="shortcut icon" type="image/png" href="/images/icon.png" />
     <link rel="stylesheet" href="/css/main.css" type="text/css" />
     <script src="/js/main.js"></script>
