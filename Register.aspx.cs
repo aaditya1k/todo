@@ -28,16 +28,50 @@ namespace Todo
         {
             ValidtorLibrary Validator = new ValidtorLibrary();
 
-            if (String.IsNullOrWhiteSpace(Email.Text)) {
-                this.errors.Add("Please enter your email address");
-            } else if (!Validator.IsValidEmailAddress(Email.Text)) {
-                this.errors.Add("Please enter a valid email address");
+            if (String.IsNullOrWhiteSpace(Email.Text))
+            {
+                this.errors.Add("Email address is required");
+            }
+            else if (!Validator.IsValidEmailAddress(Email.Text))
+            {
+                this.errors.Add("Email address is not valid");
             }
 
-            if (Password.Text.Length <= 7) {
-                this.errors.Add("Password needs to be atleast 8 characters");
-            } else if (Password.Text != Confirm_Password.Text) {
+            if (Password.Text.Length <= 7)
+            {
+                this.errors.Add("Password needs to be minimum 8 characters");
+            }
+            else if (Password.Text != Confirm_Password.Text)
+            {
                 this.errors.Add("Password do not match with confirm password");
+            }
+
+            if (String.IsNullOrEmpty(First_Name.Text))
+            {
+                this.errors.Add("First name is required");
+            }
+
+            if (this.errors.Count == 0)
+            {
+                this.con.Open();
+                SqlCommand cmd = new SqlCommand("insert into users (email, password, first_name, last_name, created_at) values (@email, @password, @first_name , @last_name, @created_at)", this.con);
+
+                cmd.Parameters.AddWithValue("@email", Email.Text);
+                cmd.Parameters.AddWithValue("@password", HelperLibrary.Hash_Password(Password.Text, "test"));
+                cmd.Parameters.AddWithValue("@first_name", First_Name.Text);
+                cmd.Parameters.AddWithValue("@last_name", Last_Name.Text);
+                cmd.Parameters.AddWithValue("@created_at", DateTime.Now);
+                int check = cmd.ExecuteNonQuery();
+                con.Close();
+
+                if (check == 1)
+                {
+                    ScriptManager.RegisterStartupScript(this, Page.GetType(), "Alert", "alert('Register Successful');", true);
+                }
+                else
+                {
+                    ScriptManager.RegisterStartupScript(this, Page.GetType(), "Alert", "alert('Something went wrong');", true);
+                }
             }
         }
     }
