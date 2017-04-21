@@ -29,7 +29,7 @@ namespace Todo
             ValidtorLibrary Validator = new ValidtorLibrary();
 
             if (String.IsNullOrWhiteSpace(Email.Text)) {
-                this.errors.Add("<script>alert('test')</script>");
+                this.errors.Add("Please enter your email address");
             } else if (!Validator.IsValidEmailAddress(Email.Text)) {
                 this.errors.Add("Please enter a valid email address");
             }
