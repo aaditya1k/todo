@@ -108,7 +108,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Register.aspx" />
-    <Content Include="Site1.Master" />
+    <Content Include="Guest.Master" />
+    <Content Include="Logged.Master" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -134,8 +135,22 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Guest.Master.cs">
+      <DependentUpon>Guest.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Guest.Master.designer.cs">
+      <DependentUpon>Guest.Master</DependentUpon>
+    </Compile>
     <Compile Include="Library\HelperLibrary.cs" />
     <Compile Include="Library\ValidtorLibrary.cs" />
+    <Compile Include="Logged.Master.cs">
+      <DependentUpon>Logged.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Logged.Master.designer.cs">
+      <DependentUpon>Logged.Master</DependentUpon>
+    </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -157,13 +172,6 @@
     </Compile>
     <Compile Include="Register.aspx.designer.cs">
       <DependentUpon>Register.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Site1.Master.cs">
-      <DependentUpon>Site1.Master</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Site1.Master.designer.cs">
-      <DependentUpon>Site1.Master</DependentUpon>
     </Compile>
   </ItemGroup>
   <PropertyGroup>

@@ -1,0 +1,29 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Guest.master.cs" Inherits="Todo.Guest" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title><%: !String.IsNullOrEmpty(Page.Title) ? Page.Title + " - " : null %>Todo</title>
+    <link rel="shortcut icon" type="image/png" href="/images/icon.png" />
+    <link rel="stylesheet" href="/css/main.css" type="text/css" />
+    <script src="/js/main.js"></script>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <div class="nav">
+        <a href="/">Home</a>
+        <% if (Request.IsAuthenticated) { %>
+            <a href="/Dashboard/Home.aspx">Dashboard</a>
+            <a href="/Logout.aspx">Logout</a>
+        <% } else { %>
+            <a href="/Login.aspx">Login</a>
+            <a href="/Register.aspx">Register</a>
+        <% } %>
+    </div>
+    <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        
+    </asp:ContentPlaceHolder>
+</body>
+</html>

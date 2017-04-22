@@ -1,4 +1,4 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site1.master.cs" Inherits="Todo.Site1" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Logged.master.cs" Inherits="Todo.Logged" %>
 
 <!DOCTYPE html>
 
@@ -7,23 +7,18 @@
     <title><%: !String.IsNullOrEmpty(Page.Title) ? Page.Title + " - " : null %>Todo</title>
     <link rel="shortcut icon" type="image/png" href="/images/icon.png" />
     <link rel="stylesheet" href="/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/css/dashboard.css" type="text/css" />
     <script src="/js/main.js"></script>
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/dashboard.js"></script>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
 <body>
-    <div class="nav">
-        <a href="/">Home</a>
-        <% if (Request.IsAuthenticated) { %>
-            <a href="/Dashboard/Home.aspx">Dashboard</a>
-            <a href="/Logout.aspx">Logout</a>
-        <% } else { %>
-            <a href="/Login.aspx">Login</a>
-            <a href="/Register.aspx">Register</a>
-        <% } %>
+    <div class="">
     </div>
     <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
-
+        
     </asp:ContentPlaceHolder>
 </body>
 </html>
