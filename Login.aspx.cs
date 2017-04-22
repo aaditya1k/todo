@@ -35,6 +35,7 @@ namespace Todo
             cmd.Parameters.AddWithValue("@password", SqlDbType.VarChar).Value = HelperLibrary.Hash_Password(Login1.Password, "test");
             int result = Convert.ToInt32(cmd.ExecuteScalar());
 
+            this.con.Close();
             if (result == 0)
             {
                 e.Authenticated = false;

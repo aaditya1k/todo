@@ -13,19 +13,22 @@ namespace Todo.Dashboard
 {
     public partial class Home : System.Web.UI.Page
     {
-        SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["MyDbConn"].ToString());
-        protected DataSet ds = new DataSet();
+        // SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["MyDbConn"].ToString());
+        // protected SqlDataReader reader;
+        // protected DataSet ds;
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            this.con.Open();
-            SqlCommand cmd = new SqlCommand("select * from lists where id=@id", this.con);
-            cmd.Parameters.AddWithValue("@id", User.Identity.Name);
+            //this.con.Open();
+            // SqlCommand cmd = new SqlCommand("select * from users", this.con);
+            // this.reader = cmd.ExecuteReader();
 
-            SqlDataAdapter da = new SqlDataAdapter();
-            da.SelectCommand = cmd;
-            da.Fill(this.ds);
-            this.con.Close();
+            // cmd.Parameters.AddWithValue("@id", User.Identity.Name);
+
+            // SqlDataAdapter da = new SqlDataAdapter();
+            // da.SelectCommand = cmd;
+            // da.Fill(this.ds);
+            // this.con.Close();
         }
     }
 }
