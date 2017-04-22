@@ -94,9 +94,12 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="css\font-awesome.min.css" />
     <Content Include="css\main.css" />
+    <Content Include="css\roboto.css" />
     <Content Include="Dashboard\Home.aspx" />
     <Content Include="Default.aspx" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="images\icon.png" />
     <Content Include="js\dashboard.js" />
     <Content Include="js\jquery-3.2.1.min.js" />
@@ -109,7 +112,18 @@
     </Content>
     <Content Include="Register.aspx" />
     <Content Include="Guest.Master" />
-    <Content Include="Logged.Master" />
+    <Content Include="fonts\-2n2p-_Y08sg57CNWQfKNvesZW2xOQ-xsNqO47m55DA.woff2" />
+    <Content Include="fonts\CWB0XYA8bzo0kSThX0UTuA.woff2" />
+    <Content Include="fonts\ek4gzZ-GeXAPcSbHtCeQI_esZW2xOQ-xsNqO47m55DA.woff2" />
+    <Content Include="fonts\Fcx7Wwv8OzT71A3E1XOAjvesZW2xOQ-xsNqO47m55DA.woff2" />
+    <Content Include="fonts\mErvLBYg_cXG3rLvUsKT_fesZW2xOQ-xsNqO47m55DA.woff2" />
+    <Content Include="fonts\NdF9MtnOpLzo-noMoG0miPesZW2xOQ-xsNqO47m55DA.woff2" />
+    <Content Include="fonts\u0TOpm082MNkS5K0Q4rhqvesZW2xOQ-xsNqO47m55DA.woff2" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\FontAwesome.otf" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -144,13 +158,6 @@
     </Compile>
     <Compile Include="Library\HelperLibrary.cs" />
     <Compile Include="Library\ValidtorLibrary.cs" />
-    <Compile Include="Logged.Master.cs">
-      <DependentUpon>Logged.Master</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Logged.Master.designer.cs">
-      <DependentUpon>Logged.Master</DependentUpon>
-    </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

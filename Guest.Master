@@ -7,20 +7,27 @@
     <title><%: !String.IsNullOrEmpty(Page.Title) ? Page.Title + " - " : null %>Todo</title>
     <link rel="shortcut icon" type="image/png" href="/images/icon.png" />
     <link rel="stylesheet" href="/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/css/roboto.css" type="text/css" />
+    <link rel="stylesheet" href="/css/font-awesome.min.css" type="text/css" />
     <script src="/js/main.js"></script>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
 <body>
-    <div class="nav">
-        <a href="/">Home</a>
-        <% if (Request.IsAuthenticated) { %>
-            <a href="/Dashboard/Home.aspx">Dashboard</a>
-            <a href="/Logout.aspx">Logout</a>
-        <% } else { %>
-            <a href="/Login.aspx">Login</a>
-            <a href="/Register.aspx">Register</a>
-        <% } %>
+    <div id="header">
+        <div class="logo">
+            <img src="/images/logo.png" />
+        </div>
+        <ul class="nav">
+            <li><a href="/"><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
+            <% if (Request.IsAuthenticated) { %>
+                <li><a href="/Dashboard/Home.aspx"><i class="fa fa-list-ul" aria-hidden="true"></i> Dashboard</a></li>
+                <li><a href="/Logout.aspx"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a></li>
+            <% } else { %>
+                <li><a href="/Login.aspx"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</a></li>
+                <li><a href="/Register.aspx"><i class="fa fa-user-plus" aria-hidden="true"></i> Register</a></li>
+            <% } %>
+        </ul>
     </div>
     <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
         

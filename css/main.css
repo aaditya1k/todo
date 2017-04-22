@@ -1,3 +1,117 @@
 ﻿body {
+    margin: 0;
+    padding: 0;
     background: #f0f0f0;
+    font-family: 'Roboto', sans-serif;
+}
+
+#header {
+    background: #fff;
+    height: 60px;
+    box-shadow: 0 0 3px #cecece;
+    border-bottom: 1px solid #d7d7d7;
+    padding: 0 15px;
+}
+
+.nav {
+    margin: 0;
+    float: right;
+}
+
+.nav li {
+    float: left;
+    list-style: none;
+    line-height: 60px;
+}
+
+input[type=submit], .nav li a, .button {
+    background: #8e69a9;
+    color: #fff;
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 2px;
+    font-size: 13px;
+    text-transform: uppercase;
+    border: 0px;
+    cursor: pointer;
+    transition: background 0.18s;
+}
+
+input[type=submit]:hover, .nav li a:hover, .button:hover {
+    background: #684980;
+}
+
+.nav li a {
+    margin-left: 10px;
+}
+
+input[type=text], input[type=password] {
+    padding: 8px;
+    background: #ffffff;
+    border: 1px solid #e3e3e3;
+    border-radius: 2px;
+}
+
+.mid-form {
+    margin: 0 auto;
+    width: 500px;
+    background: #fff;
+    box-shadow: 0 0 3px #b2b2b2;
+    margin-top: 10%;
+    padding: 15px;
+    border-radius: 2px;
+}
+
+#ContentPlaceHolder1_Login1 table tbody>:first-child {
+    display: none;
+}
+#ContentPlaceHolder1_Login1 table tbody tr td {
+    padding: 5px
+}
+#ContentPlaceHolder1_Login1 {
+    margin: 0 auto;
+}
+
+.form-title {
+    text-transform: uppercase;
+    font-size: 20px;
+}
+
+.errors {
+    background: #ef5959;
+    padding: 8px;
+    font-size: 12px;
+    margin: 10px 0;
+    color: #fff;
+    border-radius: 2px;
+}
+
+.errors li {
+    list-style: none;
+}
+
+.form-row {
+    margin: 10px;
+}
+
+.form-row .form-label {
+    float: left;
+    line-height: 34px;
+    width: 200px;
+    text-align: right;
+    margin-right: 10px;
+}
+
+#ContentPlaceHolder1_Login1 input[type=submit], .register input[type=submit] {
+    width: 100%;
+    height: 40px;
+}
+
+.logo {
+    float: left;
+}
+
+.logo img {
+    width: 50px;
+    margin-top: 5px;
 }
