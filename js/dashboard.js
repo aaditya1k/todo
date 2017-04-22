@@ -1,0 +1,3 @@
+﻿$(doument).ready(function () {
+
+});

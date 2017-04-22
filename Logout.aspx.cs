@@ -20,7 +20,8 @@ namespace Todo
             cookie.Expires = DateTime.Now.AddYears(-1);
             Response.Cookies.Add(cookie);
 
-            FormsAuthentication.RedirectToLoginPage();
+            // FormsAuthentication.RedirectToLoginPage(); // Appending ReturnUrl=%2fLogout.aspx in url
+            Response.Redirect("Login.aspx");
         }
     }
 }

@@ -42,16 +42,16 @@ namespace Todo
             else
             {
                 e.Authenticated = true;
-                this.Authenticate(Login1.UserName, Login1.RememberMeSet);
+                this.Authenticate(result, Login1.RememberMeSet);
                 // FormsAuthentication.RedirectFromLoginPage(Login1.UserName, Login1.RememberMeSet);
             }
         }
 
-        private void Authenticate(string UserName, Boolean RememberUser)
+        private void Authenticate(int UserId, Boolean RememberUser)
         {
             FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(
                 1,
-                UserName, // HttpContext.Current.User.Identity.Name
+                UserId.ToString(), // HttpContext.Current.User.Identity.Name || User.Identity.Name
                 DateTime.Now,
                 DateTime.Now.AddMinutes(50),
                 RememberUser,

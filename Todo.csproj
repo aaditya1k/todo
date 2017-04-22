@@ -98,6 +98,8 @@
     <Content Include="Dashboard\Home.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="images\icon.png" />
+    <Content Include="js\dashboard.js" />
+    <Content Include="js\jquery-3.2.1.min.js" />
     <Content Include="js\main.js" />
     <Content Include="Login.aspx" />
     <Content Include="Logout.aspx" />
