@@ -44,7 +44,6 @@ namespace Todo
                 e.Authenticated = true;
                 this.Authenticate(Login1.UserName, Login1.RememberMeSet);
                 // FormsAuthentication.RedirectFromLoginPage(Login1.UserName, Login1.RememberMeSet);
-                Response.Redirect("Default.aspx");
             }
         }
 
@@ -69,7 +68,13 @@ namespace Todo
             authCookie.Expires = DateTime.Now.AddHours(12);
 
             Response.Cookies.Add(authCookie);
-            Response.Redirect("~/Default.aspx");
+
+            string returnUrl = Request.QueryString["ReturnUrl"];
+            if (returnUrl == null)
+            {
+                returnUrl = "~/Dashboard/Home.aspx";
+            }
+            Response.Redirect(returnUrl);
         }
     }
 }
