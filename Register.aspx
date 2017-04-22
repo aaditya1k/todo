@@ -10,8 +10,8 @@
         Email: <asp:TextBox ID="Email" runat="server"></asp:TextBox><br />
         Password: <asp:TextBox ID="Password" TextMode="Password" runat="server"></asp:TextBox><br />
         Confirm Password: <asp:TextBox ID="Confirm_Password" TextMode="Password" runat="server"></asp:TextBox><br />
-        FirstName: <asp:TextBox ID="First_Name" TextMode="Password" runat="server"></asp:TextBox><br />
-        LastName: <asp:TextBox ID="Last_Name" TextMode="Password" runat="server"></asp:TextBox><br />
+        FirstName: <asp:TextBox ID="First_Name" runat="server"></asp:TextBox><br />
+        LastName: <asp:TextBox ID="Last_Name" runat="server"></asp:TextBox><br />
         <asp:Button ID="Button1" runat="server" Text="Register" OnClick="Register_Submit" />
     </form>
 </asp:Content>

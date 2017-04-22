@@ -14,8 +14,13 @@
 <body>
     <div class="nav">
         <a href="/">Home</a>
-        <a href="/Login.aspx">Login</a>
-        <a href="/Register.aspx">Register</a>
+        <% if (Request.IsAuthenticated) { %>
+            <a href="/Dashboard.aspx">Dashboard</a>
+            <a href="/Logout.aspx">Logout</a>
+        <% } else { %>
+            <a href="/Login.aspx">Login</a>
+            <a href="/Register.aspx">Register</a>
+        <% } %>
     </div>
     <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
 
