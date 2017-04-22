@@ -33,9 +33,9 @@ namespace Todo
             SqlCommand cmd = new SqlCommand("select id from users where email=@email and password=@password", this.con);
             cmd.Parameters.AddWithValue("@email", SqlDbType.VarChar).Value = Login1.UserName;
             cmd.Parameters.AddWithValue("@password", SqlDbType.VarChar).Value = HelperLibrary.Hash_Password(Login1.Password, "test");
-            string result = Convert.ToString(cmd.ExecuteScalar());
+            int result = Convert.ToInt32(cmd.ExecuteScalar());
 
-            if (string.IsNullOrEmpty(result))
+            if (result == 0)
             {
                 e.Authenticated = false;
             }

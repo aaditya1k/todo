@@ -37,9 +37,9 @@ namespace Todo
                 this.errors.Add("Email address is not valid");
             }
 
-            if (Password.Text.Length <= 7)
+            if (Password.Text.Length < 6)
             {
-                this.errors.Add("Password needs to be minimum 8 characters");
+                this.errors.Add("Password needs to be minimum 6 characters");
             }
             else if (Password.Text != Confirm_Password.Text)
             {
@@ -51,10 +51,19 @@ namespace Todo
                 this.errors.Add("First name is required");
             }
 
+            this.con.Open();
+            SqlCommand cmd = new SqlCommand("select id from users where email=@email", this.con);
+            cmd.Parameters.AddWithValue("@email", Email.Text);
+            int result = Convert.ToInt32(cmd.ExecuteScalar());
+
+            if (result != 0)
+            {
+                this.errors.Add("This email id is already in use");
+            }
+
             if (this.errors.Count == 0)
             {
-                this.con.Open();
-                SqlCommand cmd = new SqlCommand("insert into users (email, password, first_name, last_name, created_at) values (@email, @password, @first_name , @last_name, @created_at)", this.con);
+                cmd = new SqlCommand("insert into users (email, password, first_name, last_name, created_at) values (@email, @password, @first_name , @last_name, @created_at)", this.con);
 
                 cmd.Parameters.AddWithValue("@email", Email.Text);
                 cmd.Parameters.AddWithValue("@password", HelperLibrary.Hash_Password(Password.Text, "test"));
@@ -62,16 +71,20 @@ namespace Todo
                 cmd.Parameters.AddWithValue("@last_name", Last_Name.Text);
                 cmd.Parameters.AddWithValue("@created_at", DateTime.Now);
                 int check = cmd.ExecuteNonQuery();
-                con.Close();
+                this.con.Close();
 
                 if (check == 1)
                 {
-                    ScriptManager.RegisterStartupScript(this, Page.GetType(), "Alert", "alert('Register Successful');", true);
+                    ScriptManager.RegisterStartupScript(this, Page.GetType(), "Alert", "alert('Registered Successfully');", true);
                 }
                 else
                 {
                     ScriptManager.RegisterStartupScript(this, Page.GetType(), "Alert", "alert('Something went wrong');", true);
                 }
+            }
+            else
+            {
+                this.con.Close();
             }
         }
     }
