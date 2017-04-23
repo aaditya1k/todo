@@ -1,35 +1,79 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Guest.Master" AutoEventWireup="true" CodeBehind="Home.aspx.cs" Inherits="Todo.Dashboard.Home" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <script>
+        var Dashboard = {};
+        Dashboard.stickyColors = <%= serializer.Serialize(availableColors) %>;
+    </script>
+</asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="dashboard">
-        <a href="#" id="new_list" class="button">New List</a>
-
-        <% for (int i = 0; i < dt.Rows.Count; i++) { %>
-            <%: dt.Rows[i]["list_name"] %>
-        <% } %>
-
-        <div id="lists">
-            <div class="list">
-                <div class="list-title">
-                    <input type="text" value="" placeholder="List Title"/>
+        
+        <div id="new-list" class="sticky sticky-th-purple">
+            <div class="sticky-title">
+                <a href="#" class="add-items"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                <div class="input" contenteditable="true">my_title</div>
+            </div>
+            <div class="sticky-items">
+                <div class="sticky-item">
+                    <div class="trash"><i class="fa fa-trash-o" aria-hidden="true"></i></div>
+                    <div class="input" contenteditable="true">asd1</div>
                 </div>
-                <div class="list-items">
-                    <div class="item">
-                        <input type="checkbox" />
-                        <input type="text" placeholder="Item 1"/>
-                        <a href="#" class="remove-item"><i class="fa fa-remove"></i></a>
-                    </div>
-                    <div class="item">
-                        <input type="checkbox" />
-                        <input type="text" placeholder="Item 2"/>
-                        <a href="#" class="remove-item"><i class="fa fa-remove"></i></a>
-                    </div>
-                    <div class="item">
-                        <input type="checkbox" />
-                        <input type="text" placeholder="Item 3"/>
-                        <a href="#" class="remove-item"><i class="fa fa-remove"></i></a>
-                    </div>
+                <div class="sticky-item">
+                    <div class="trash"><i class="fa fa-trash-o" aria-hidden="true"></i></div>
+                    <div class="input" contenteditable="true">asd2</div>
+                </div>
+                <div class="sticky-item">
+                    <div class="trash"><i class="fa fa-trash-o" aria-hidden="true"></i></div>
+                    <div class="input" contenteditable="true">asd2</div>
+                </div>
+                <div class="sticky-item">
+                    <div class="trash"><i class="fa fa-trash-o" aria-hidden="true"></i></div>
+                    <div class="input" contenteditable="true">asd2</div>
                 </div>
             </div>
+            <div class="sticky-controls">
+                <div class="select-color">
+                    <% for (int i = 0; i < availableColors.Length; i++) {  %>
+                        <a href="#" class="slcl-<%: availableColors[i] %>"></a>
+                    <% } %>
+                </div>
+                <a href="#" id="create-list" class="button">CREATE</a>
+            </div>
+        </div>
+
+        <% for (int i = 0; i < userLists.Rows.Count; i++) { %>
+            <div>
+                <%: userLists.Rows[i]["list_name"] %>
+            </div>
+        <% } %>
+
+        <div id="lists" class="clear">
+            <% for (int i = 0; i < availableColors.Length; i++) { %>
+                <div class="sticky sticky-th-<%: availableColors[i] %>">
+                    <div class="sticky-title">
+                        <a href="#" class="add-items"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                        <div class="input" contenteditable="true"></div>
+                    </div>
+                    <div class="sticky-items">
+                        <div class="sticky-item">
+                            <div class="trash"><i class="fa fa-trash-o" aria-hidden="true"></i></div>
+                            <div class="input" contenteditable="true"></div>
+                        </div>
+                        <div class="sticky-item">
+                            <div class="trash"><i class="fa fa-trash-o" aria-hidden="true"></i></div>
+                            <div class="input" contenteditable="true"></div>
+                        </div>
+                    </div>
+                    <div class="sticky-controls">
+                        <div class="select-color">
+                            <% for (int j = 0; j < availableColors.Length; j++) {  %>
+                                <a href="#" class="slcl-<%: availableColors[j] %>"></a>
+                            <% } %>
+                        </div>
+                        <a href="#" class="button">SAVE</a>
+                    </div>
+                </div>
+            <% } %>
         </div>
     </div>
 </asp:Content>

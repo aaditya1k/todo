@@ -1,36 +1,137 @@
-﻿.list {
+﻿#new-list {
+    width: 350px;
+    margin: 0 auto;
+}
+
+#lists .sticky {
     width: 30%;
     float: left;
     margin-top: 15px;
     margin-right: 15px;
-    input[type=text] {
+}
+
+.sticky {
+    box-shadow: 0 3px 5px rgba(0,0,0,0.3);
+    .sticky-title {
+        position: relative;
+        padding: 10px 0;
+        .input {
+            padding: 8px;
+            font-size: 18px;
+        }
+    }
+    .sticky-items {
+        padding: 15px 10px 10px 10px;
+    }
+    .sticky-item {
+        position: relative;
+        .trash {
+            position: absolute;
+            right: 10px;
+            top: 3px;
+            font-size: 11px;
+            cursor: pointer;
+            display: none;
+        }
+        .input {
+            padding: 6px 10px;
+            box-shadow: 0 0 1px rgba(0, 0, 0, 0.22);
+        }
+        &:hover {
+            .trash {
+                display: block
+            }
+        }
+    }
+    .add-items {
+            position: absolute;
+            z-index: 1;
+            right: 10px;
+            bottom: -10px;
+            color: #fff;
+            font-size: 13px;
+            background: #ededed;
+            color: #818181;
+            padding: 5px 6px 4px 6px;
+            border-radius: 50%;
+            line-height: 13px;
+            box-shadow: 0 0 3px rgba(0,0,0,0.6);
+            &:hover {
+                color: #333;
+                background: #dfdfdf;
+            }
+    }
+}
+
+.sticky-th-green {
+    .sticky-controls, .sticky-title, .sticky-title .input {background: #60c760}
+    .sticky-items, .sticky-item .input {background: #a3c9a3}
+    .sticky-controls .button:hover {background: #3e953e}
+}
+
+.sticky-th-purple {
+    .sticky-controls, .sticky-title, .sticky-title .input {background: #8e69a9}
+    .sticky-items, .sticky-item .input {background: #b596cc}
+    .sticky-controls .button:hover {background: #6a4a81}
+}
+
+.sticky-th-pink {
+    .sticky-controls, .sticky-title, .sticky-title .input {background: #f94968}
+    .sticky-items, .sticky-item .input {background: #ec6e84}
+    .sticky-controls .button:hover {background: #ec2548}
+}
+
+.sticky-th-black {
+    .sticky-controls, .sticky-title, .sticky-title .input {background: #272727;color: #fff;}
+    .sticky-items, .sticky-item .input {background: #474747;color: #fff;}
+    .sticky-controls .button:hover {background: #090909}
+}
+
+.sticky-th-grey {
+    .sticky-controls, .sticky-title, .sticky-title .input {background: #d8d8d8}
+    .sticky-items, .sticky-item .input {background: #f0f0f0}
+    .sticky-controls .button:hover {background: #8d8d8d;color: #fff;}
+    .sticky-controls .button {color: #000}
+}
+
+.sticky-th-yellow {
+    .sticky-controls, .sticky-title, .sticky-title .input {background: #f1e54a}
+    .sticky-items, .sticky-item .input {background: #ece598}
+    .sticky-controls .button:hover {background: #e3d521}
+    .sticky-controls .button {color: #000}
+}
+
+.sticky-controls .select-color a {
+    &.slcl-green {background: #60c760}
+    &.slcl-purple {background: #8e69a9}
+    &.slcl-pink {background: #f94968}
+    &.slcl-black {background: #272727}
+    &.slcl-grey {background: #d8d8d8}
+    &.slcl-yellow {background: #f1e54a}
+}
+
+.sticky-controls {
+    padding: 10px;
+    @extend %clear;
+    .select-color {
+        float: left;
+        background: #ededed;
+        padding: 5px;
+        a {
+            width: 10px;
+            height: 10px;
+            float: left;
+            margin-right: 5px;
+            border-radius: 50%;
+        }
+        &>:last-child {
+            margin-right: 0 !important;
+        }
+    }
+    .button {
+        float: right;
         background: transparent;
-        width: 80%;
-        border: 0;
-        border-bottom: 1px solid #609460;
-    }
-}
-
-.list-title {
-    background: #60c760;
-    padding: 0 8px;
-    input[type=text] {
-        width: 100%;
-        padding: 8px 0;
-        border: 0;
-        border-bottom: 1px dotted #266626;
-    }
-}
-
-.item {
-    background: #a3c9a3;
-    position: relative;
-    input[type=checkbox] {
-        margin-top: 5px;
-        vertical-align: middle;
-    }
-    .remove-item {
-        color: #7c7c7c;
-        font-size: 11px;
+        padding: 2px 8px;
+        border-radius: 0px;
     }
 }

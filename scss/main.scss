@@ -5,10 +5,25 @@ body {
     padding: 0;
     background: #f0f0f0;
     font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    line-height: 18px;
 }
 
 .left {float: left}
 .right {float: right}
+
+.clear, %clear {
+    clear: both;
+    &:after {
+        display: table;
+        content: ' ';
+        clear: both;
+    }
+}
+
+[contenteditable]:focus {
+    outline: none
+}
 
 input[type=text], input[type=email] , input[type=password] {
     padding: 8px;
@@ -26,6 +41,11 @@ input[type=text], input[type=email] , input[type=password] {
     box-shadow: 0 0 3px #cecece;
     border-bottom: 1px solid #d7d7d7;
     padding: 0 15px;
+}
+
+.disabled {
+    pointer-events: none;
+    opacity: .7;;
 }
 
 .logo {
