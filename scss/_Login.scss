@@ -1,0 +1,11 @@
+﻿#ContentPlaceHolder1_Login1 {
+    margin: 0 auto;
+    table tbody {
+        &>:first-child {
+            display: none;
+        }
+        tr td {
+            padding: 5px
+        }
+    }
+}

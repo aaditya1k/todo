@@ -1,0 +1,36 @@
+﻿.list {
+    width: 30%;
+    float: left;
+    margin-top: 15px;
+    margin-right: 15px;
+    input[type=text] {
+        background: transparent;
+        width: 80%;
+        border: 0;
+        border-bottom: 1px solid #609460;
+    }
+}
+
+.list-title {
+    background: #60c760;
+    padding: 0 8px;
+    input[type=text] {
+        width: 100%;
+        padding: 8px 0;
+        border: 0;
+        border-bottom: 1px dotted #266626;
+    }
+}
+
+.item {
+    background: #a3c9a3;
+    position: relative;
+    input[type=checkbox] {
+        margin-top: 5px;
+        vertical-align: middle;
+    }
+    .remove-item {
+        color: #7c7c7c;
+        font-size: 11px;
+    }
+}

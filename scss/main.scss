@@ -10,12 +10,30 @@ body {
 .left {float: left}
 .right {float: right}
 
+input[type=text], input[type=email] , input[type=password] {
+    padding: 8px;
+    background: #ffffff;
+    border: 1px solid #e3e3e3;
+    border-radius: 2px;
+    &:focus {
+        outline: none
+    }
+}
+
 #header {
     background: #fff;
     height: 60px;
     box-shadow: 0 0 3px #cecece;
     border-bottom: 1px solid #d7d7d7;
     padding: 0 15px;
+}
+
+.logo {
+    float: left;
+    img {
+        width: 50px;
+        margin-top: 5px;
+    }
 }
 
 .nav {
@@ -31,7 +49,7 @@ body {
     }
 }
 
-input[type=submit], .nav li a, .button {
+.button, input[type=submit], .nav li a {
     background: #8e69a9;
     color: #fff;
     text-decoration: none;
@@ -47,16 +65,6 @@ input[type=submit], .nav li a, .button {
     }
 }
 
-input[type=text], input[type=email] , input[type=password] {
-    padding: 8px;
-    background: #ffffff;
-    border: 1px solid #e3e3e3;
-    border-radius: 2px;
-    &:focus {
-        outline: none
-    }
-}
-
 .mid-form {
     margin: 0 auto;
     width: 500px;
@@ -65,26 +73,6 @@ input[type=text], input[type=email] , input[type=password] {
     margin-top: 10%;
     padding: 15px;
     border-radius: 2px;
-}
-
-.logo {
-    float: left;
-    img {
-        width: 50px;
-        margin-top: 5px;
-    }
-}
-
-#ContentPlaceHolder1_Login1 {
-    margin: 0 auto;
-    table tbody {
-        &>:first-child {
-            display: none;
-        }
-        tr td {
-            padding: 5px
-        }
-    }
 }
 
 .form-title {
@@ -124,43 +112,6 @@ input[type=text], input[type=email] , input[type=password] {
     height: 40px;
 }
 
-
-
-.list {
-    width: 30%;
-    float: left;
-    margin-top: 15px;
-    margin-right: 15px;
-    input[type=text] {
-        background: transparent;
-        width: 80%;
-        border: 0;
-        border-bottom: 1px solid #609460;
-    }
-}
-
-.list-title {
-    background: #60c760;
-    padding: 0 8px;
-    input[type=text] {
-        width: 100%;
-        padding: 8px 0;
-        border: 0;
-        border-bottom: 1px dotted #266626;
-    }
-}
-
-.item {
-    background: #a3c9a3;
-    position: relative;
-    input[type=checkbox] {
-        margin-top: 5px;
-        vertical-align: middle;
-    }
-    .remove-item {
-        color: #7c7c7c;
-        font-size: 11px;
-    }
-}
-
+@import '_Login.scss';
+@import '_Dashboard.scss';
 @import 'inc/font-awesome.min.scss';
