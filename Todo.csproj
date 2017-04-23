@@ -94,15 +94,16 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="css\font-awesome.min.css" />
-    <Content Include="css\main.css" />
-    <Content Include="css\roboto.css" />
+    <None Include="scss\inc\font-awesome.min.scss" />
+    <None Include="scss\main.scss" />
+    <None Include="scss\inc\roboto.scss" />
     <Content Include="Dashboard\Home.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="fonts\fontawesome-webfont.svg" />
+    <Content Include="gulpfile.js" />
     <Content Include="images\icon.png" />
     <Content Include="js\dashboard.js" />
-    <Content Include="js\jquery-3.2.1.min.js" />
+    <Content Include="vendor\jquery-3.2.1.min.js" />
     <Content Include="js\main.js" />
     <Content Include="Login.aspx" />
     <Content Include="Logout.aspx" />
@@ -180,6 +181,9 @@
     <Compile Include="Register.aspx.designer.cs">
       <DependentUpon>Register.aspx</DependentUpon>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="build\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -1,11 +1,11 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Guest.Master" AutoEventWireup="true" CodeBehind="Home.aspx.cs" Inherits="Todo.Dashboard.Home" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <script src="/js/jquery-3.2.1.min.js"></script>
-    <script src="/js/dashboard.js"></script>
-</asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="dashboard">
         <a href="#" id="new_list" class="button">New List</a>
+
+        <% for (int i = 0; i < dt.Rows.Count; i++) { %>
+            <%: dt.Rows[i]["list_name"] %>
+        <% } %>
 
         <div id="lists">
             <div class="list">

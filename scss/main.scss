@@ -1,9 +1,14 @@
-﻿body {
+﻿@import 'inc/roboto.scss';
+
+body {
     margin: 0;
     padding: 0;
     background: #f0f0f0;
     font-family: 'Roboto', sans-serif;
 }
+
+.left {float: left}
+.right {float: right}
 
 #header {
     background: #fff;
@@ -13,18 +18,17 @@
     padding: 0 15px;
 }
 
-.left {float: left}
-.right {float: right}
-
 .nav {
     margin: 0;
     float: right;
-}
-
-.nav li {
-    float: left;
-    list-style: none;
-    line-height: 60px;
+    li {
+        float: left;
+        list-style: none;
+        line-height: 60px;
+        a {
+            margin-left: 10px;
+        }
+    }
 }
 
 input[type=submit], .nav li a, .button {
@@ -38,21 +42,19 @@ input[type=submit], .nav li a, .button {
     border: 0px;
     cursor: pointer;
     transition: background 0.18s;
+    &:hover {
+        background: #684980;
+    }
 }
 
-input[type=submit]:hover, .nav li a:hover, .button:hover {
-    background: #684980;
-}
-
-.nav li a {
-    margin-left: 10px;
-}
-
-input[type=text], input[type=password] {
+input[type=text], input[type=email] , input[type=password] {
     padding: 8px;
     background: #ffffff;
     border: 1px solid #e3e3e3;
     border-radius: 2px;
+    &:focus {
+        outline: none
+    }
 }
 
 .mid-form {
@@ -65,19 +67,44 @@ input[type=text], input[type=password] {
     border-radius: 2px;
 }
 
-#ContentPlaceHolder1_Login1 table tbody>:first-child {
-    display: none;
+.logo {
+    float: left;
+    img {
+        width: 50px;
+        margin-top: 5px;
+    }
 }
-#ContentPlaceHolder1_Login1 table tbody tr td {
-    padding: 5px
-}
+
 #ContentPlaceHolder1_Login1 {
     margin: 0 auto;
+    table tbody {
+        &>:first-child {
+            display: none;
+        }
+        tr td {
+            padding: 5px
+        }
+    }
 }
 
 .form-title {
     text-transform: uppercase;
     font-size: 20px;
+}
+
+.form-row {
+    margin: 10px;
+    .form-label {
+        float: left;
+        line-height: 34px;
+        width: 200px;
+        text-align: right;
+        margin-right: 10px;
+    }
+}
+
+.dashboard {
+    padding: 20px;
 }
 
 .errors {
@@ -87,22 +114,9 @@ input[type=text], input[type=password] {
     margin: 10px 0;
     color: #fff;
     border-radius: 2px;
-}
-
-.errors li {
-    list-style: none;
-}
-
-.form-row {
-    margin: 10px;
-}
-
-.form-row .form-label {
-    float: left;
-    line-height: 34px;
-    width: 200px;
-    text-align: right;
-    margin-right: 10px;
+    li {
+        list-style: none;
+    }
 }
 
 #ContentPlaceHolder1_Login1 input[type=submit], .register input[type=submit] {
@@ -110,56 +124,43 @@ input[type=text], input[type=password] {
     height: 40px;
 }
 
-.logo {
-    float: left;
-}
 
-.logo img {
-    width: 50px;
-    margin-top: 5px;
-}
-
-.dashboard {
-    padding: 20px;
-}
 
 .list {
     width: 30%;
     float: left;
     margin-top: 15px;
     margin-right: 15px;
-}
-
-.list input[type=text] {
-    background: transparent;
-    width: 80%;
-    border: 0;
-    border-bottom: 1px solid #609460;
+    input[type=text] {
+        background: transparent;
+        width: 80%;
+        border: 0;
+        border-bottom: 1px solid #609460;
+    }
 }
 
 .list-title {
     background: #60c760;
     padding: 0 8px;
+    input[type=text] {
+        width: 100%;
+        padding: 8px 0;
+        border: 0;
+        border-bottom: 1px dotted #266626;
+    }
 }
 
 .item {
     background: #a3c9a3;
     position: relative;
+    input[type=checkbox] {
+        margin-top: 5px;
+        vertical-align: middle;
+    }
+    .remove-item {
+        color: #7c7c7c;
+        font-size: 11px;
+    }
 }
 
-.item input[type=checkbox] {
-    margin-top: 5px;
-    vertical-align: middle;
-}
-
-.list-title input[type=text] {
-    width: 100%;
-    padding: 8px 0;
-    border: 0;
-    border-bottom: 1px dotted #266626;
-}
-
-.remove-item {
-    color: #7c7c7c;
-    font-size: 11px;
-}
+@import 'inc/font-awesome.min.scss';
