@@ -41,9 +41,12 @@
             </div>
         </div>
 
-        <% for (int i = 0; i < userLists.Rows.Count; i++) { %>
+        <% for (int listIndex = 0; listIndex < userLists.Rows.Count; listIndex++) { %>
             <div>
-                <%: userLists.Rows[i]["list_name"] %>
+                <%: userLists.Rows[listIndex]["list_name"] %>
+                <%  for (int itemIndex = 0; itemIndex < userListsItems[listIndex].Rows.Count; itemIndex++) { %>
+                    &nbsp;&nbsp;<%: userListsItems[listIndex].Rows[itemIndex]["id"] %> <%: userListsItems[listIndex].Rows[itemIndex]["item_content"] %><br />
+                <% } %>
             </div>
         <% } %>
 

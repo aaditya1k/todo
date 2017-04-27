@@ -19,7 +19,7 @@ namespace Todo.Dashboard
         private SqlDataAdapter da = new SqlDataAdapter();
 
         protected DataTable userLists = new DataTable();
-        //protected DataTable[] userListsItems;
+        protected DataTable[] userListsItems;
         protected JavaScriptSerializer serializer = new JavaScriptSerializer();
         protected string[] availableColors = new string[] {
             "green",
@@ -57,15 +57,18 @@ namespace Todo.Dashboard
                 da.SelectCommand = cmd;
                 da.Fill(this.userLists);
 
-                //this.userListsItems = new DataTable[this.userLists.Rows.Count];
-                //for (int i = 0; i < this.userLists.Rows.Count; i++)
-                //{
-                //    cmd = new SqlCommand("select * from list_items where list_id=@list_id", this.con);
-                //    cmd.Parameters.AddWithValue("@list_id", this.userLists.Rows[i]["id"]);
-                //    da.SelectCommand = cmd;
-                //    this.userListsItems[i] = new DataTable();
-                //    da.Fill(this.userListsItems[i]);
-                //}
+                this.userListsItems = new DataTable[this.userLists.Rows.Count];
+
+                // foreach (DataRow a in userLists.Rows)
+                for (int i = 0; i < this.userLists.Rows.Count; ++i)
+                {
+                    this.userListsItems[i] = new DataTable();
+                    cmd = new SqlCommand("select * from list_items where list_id=@list_id", this.con);
+                    cmd.Parameters.AddWithValue("@list_id", this.userLists.Rows[i]["id"]);
+                    da.SelectCommand = cmd;
+                    da.Fill(this.userListsItems[i]);
+                }
+
                 this.con.Close();
             }
         }
