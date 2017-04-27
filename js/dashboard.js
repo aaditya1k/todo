@@ -38,10 +38,18 @@ $(document).ready(function () {
 
     $('.add-items').click(function (e) {
         e.preventDefault();
-        $(this).parent().siblings('.sticky-items').prepend('<div class="sticky-item">\
-                    <div class="trash"><i class="fa fa-trash-o" aria-hidden="true"></i></div>\
+        var $this = $(this);
+        var newList = ($this.data('new-list') == 1 ? true : false);
+        $this.parent().siblings('.sticky-items').prepend('<div class="sticky-item">\
+                    <div' + (newList ? ' data-new-list="1" ' : ' ') + 'class="trash"><i class="fa fa-trash-o" aria-hidden="true"></i></div>\
                     <div class="input" contenteditable="true"></div>\
                 </div>');
+    });
+
+    $(document).on('click', '.sticky-item .trash', function (e) {
+        e.preventDefault();
+        var $this = $(this);
+        $this.parent().remove();
     });
 
     $('#create-list').click(function (e) {
@@ -49,22 +57,24 @@ $(document).ready(function () {
         var $sticky = $(this).closest('.sticky');
         $sticky.addClass('disabled');
         var postData = {};
-        postData.title = $('#new-list .sticky-title .input').html().replace(/<br\s*[\/]?>/gi, "\n");
+        postData.title = $('#new-list .sticky-title .input').html().replace(/<br\s*[\/]?>/gi, "\n").replace("&nbsp;", " ");
         postData.items = {};
 
         var stickyClassNames = $sticky.attr('class').split(' ');
         postData.color = Dashboard.giveColorName(stickyClassNames);
 
         $('#new-list .sticky-items .sticky-item').each(function (i) {
-            postData.items[i] = $(this).find('.input').html().replace(/<br\s*[\/]?>/gi, "\n");
+            postData.items[i] = $(this).find('.input').html().replace(/<br\s*[\/]?>/gi, "\n").replace("&nbsp;", " ");
         });
 
         $.ajax({
             type: 'post',
             url: '/Dashboard/Home.aspx?add-new=1',
             data: postData,
-            success: function (e) {
-                
+            success: function (r) {
+                if (r.status === 1) {
+                    window.location.reload();
+                }
             }, error: function (e) {
                 
             }, complete: function () {
@@ -72,4 +82,34 @@ $(document).ready(function () {
             }
         });
     });
+
+    //$('.save-list').click(function (e) {
+    //    e.preventDefault();
+    //    var $this = $(this);
+    //    var $sticky = $(this).closest('.sticky');
+    //    $sticky.addClass('disabled');
+    //    var postData = {};
+    //    postData.title = $sticky.find('.sticky-title .input').html().replace(/<br\s*[\/]?>/gi, "\n").replace("&nbsp;", " ");
+    //    postData.items = {};
+
+    //    var stickyClassNames = $sticky.attr('class').split(' ');
+    //    postData.color = Dashboard.giveColorName(stickyClassNames);
+
+    //    //$sticky.find('.sticky-items .sticky-item').each(function (i) {
+    //    //    postData.items[i] = $(this).find('.input').html().replace(/<br\s*[\/]?>/gi, "\n").replace("&nbsp;", " ");
+    //    //});
+
+    //    $.ajax({
+    //        type: 'post',
+    //        url: '/Dashboard/Home.aspx?update=1&id=' + $this.data('id'),
+    //        data: postData,
+    //        success: function (r) {
+                
+    //        }, error: function (e) {
+
+    //        }, complete: function () {
+    //            $sticky.removeClass('disabled');
+    //        }
+    //    });
+    //});
 });

@@ -52,7 +52,7 @@ namespace Todo.Dashboard
             else
             {
                 this.con.Open();
-                SqlCommand cmd = new SqlCommand("select * from lists where user_id=@user_id", this.con);
+                SqlCommand cmd = new SqlCommand("select * from lists where user_id=@user_id order by id desc", this.con);
                 cmd.Parameters.AddWithValue("@user_id", User.Identity.Name);
                 da.SelectCommand = cmd;
                 da.Fill(this.userLists);
@@ -63,7 +63,7 @@ namespace Todo.Dashboard
                 for (int i = 0; i < this.userLists.Rows.Count; ++i)
                 {
                     this.userListsItems[i] = new DataTable();
-                    cmd = new SqlCommand("select * from list_items where list_id=@list_id", this.con);
+                    cmd = new SqlCommand("select * from list_items where list_id=@list_id order by id asc", this.con);
                     cmd.Parameters.AddWithValue("@list_id", this.userLists.Rows[i]["id"]);
                     da.SelectCommand = cmd;
                     da.Fill(this.userListsItems[i]);
@@ -89,8 +89,8 @@ namespace Todo.Dashboard
             this.con.Open();
             SqlCommand cmd = new SqlCommand("insert into lists (user_id, list_name, list_theme, is_completed, created_at) output inserted.id values (@user_id, @list_name, @list_theme, 0, @created_at)", this.con);
             cmd.Parameters.AddWithValue("@user_id", User.Identity.Name);
-            cmd.Parameters.AddWithValue("@list_name", Request.Form["title"]);
-            cmd.Parameters.AddWithValue("@list_theme", Request.Form["color"]);
+            cmd.Parameters.AddWithValue("@list_name", Request.Form["title"].Trim());
+            cmd.Parameters.AddWithValue("@list_theme", Request.Form["color"].Trim());
             cmd.Parameters.AddWithValue("@created_at", DateTime.Now);
             int newId = (Int32)cmd.ExecuteScalar();
 
@@ -100,7 +100,7 @@ namespace Todo.Dashboard
                 {
                     cmd = new SqlCommand("insert into list_items (list_id, item_content, is_completed, created_at) values (@list_id, @item_content,0, @created_at)", this.con);
                     cmd.Parameters.AddWithValue("@list_id", newId);
-                    cmd.Parameters.AddWithValue("@item_content", Request.Form[a]);
+                    cmd.Parameters.AddWithValue("@item_content", Request.Form[a].Trim());
                     cmd.Parameters.AddWithValue("@created_at", DateTime.Now);
                     cmd.ExecuteNonQuery();
                 }
