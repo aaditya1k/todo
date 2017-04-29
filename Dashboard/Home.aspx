@@ -39,7 +39,7 @@
 
         <div id="lists" class="clear">
         <% for (int listIndex = 0; listIndex < userLists.Rows.Count; listIndex++) { %>
-            <div class="sticky sticky-th-<%: userLists.Rows[listIndex]["list_theme"] %>">
+            <div class="sticky sticky-th-<%= HttpUtility.HtmlEncode(userLists.Rows[listIndex]["list_theme"]).Replace("\n", "<br/>").Replace(" ", "&nbsp;") %>">
                     <div class="sticky-title">
                         <a href="#" class="add-items"><i class="fa fa-plus" aria-hidden="true"></i></a>
                         <div class="input" contenteditable="true"><%: userLists.Rows[listIndex]["list_name"] %></div>
@@ -48,7 +48,7 @@
                         <%  for (int itemIndex = 0; itemIndex < userListsItems[listIndex].Rows.Count; itemIndex++) { %>
                             <div class="sticky-item">
                                 <div class="trash"><i class="fa fa-trash-o" aria-hidden="true"></i></div>
-                                <div class="input" contenteditable="true"><%: userListsItems[listIndex].Rows[itemIndex]["item_content"] %></div>
+                                <div class="input" contenteditable="true"><%= HttpUtility.HtmlEncode(userListsItems[listIndex].Rows[itemIndex]["item_content"]).Replace("\n", "<br/>").Replace(" ", "&nbsp;") %></div>
                             </div>
                         <% } %>
                     </div>

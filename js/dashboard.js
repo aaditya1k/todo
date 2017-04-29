@@ -2,6 +2,23 @@
     var Dashboard = {};
 }
 
+Dashboard.filterHtml = function (string) {
+    return string
+        // in case there are <div> because of paste remove them first
+        .replace(/<div>/gi, '')
+        .replace(/<\/div>/gi, '<br/>')
+
+        // convert br to n
+        .replace(/<br\s*[\/]?>/gi, "\n")
+        
+        // convert some html entities to actual char
+        .replace(/&nbsp;/gi, " ")
+        .replace(/&quot;/gi, '"')
+        .replace(/&lt;/gi, "<")
+        .replace(/&gt;/gi, ">")
+        .replace(/&amp;/gi, "&");
+};
+
 $(document).ready(function () {
     Dashboard.giveColorName = function (stickyClassNames) {
         var found = false;
@@ -57,14 +74,14 @@ $(document).ready(function () {
         var $sticky = $(this).closest('.sticky');
         $sticky.addClass('disabled');
         var postData = {};
-        postData.title = $('#new-list .sticky-title .input').html().replace(/<br\s*[\/]?>/gi, "\n").replace("&nbsp;", " ");
+        postData.title = Dashboard.filterHtml($('#new-list .sticky-title .input').html());
         postData.items = {};
 
         var stickyClassNames = $sticky.attr('class').split(' ');
         postData.color = Dashboard.giveColorName(stickyClassNames);
 
         $('#new-list .sticky-items .sticky-item').each(function (i) {
-            postData.items[i] = $(this).find('.input').html().replace(/<br\s*[\/]?>/gi, "\n").replace("&nbsp;", " ");
+            postData.items[i] = Dashboard.filterHtml($(this).find('.input').html());
         });
 
         $.ajax({
@@ -76,7 +93,7 @@ $(document).ready(function () {
                     window.location.reload();
                 }
             }, error: function (e) {
-                
+                alert('There was a problem, Please try again.');
             }, complete: function () {
                 $sticky.removeClass('disabled');
             }
