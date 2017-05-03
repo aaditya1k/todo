@@ -15,15 +15,15 @@
             </div>
             <div class="sticky-items">
                 <div class="sticky-item">
-                    <div class="trash"><i class="fa fa-trash-o" aria-hidden="true"></i></div>
+                    <div data-new-list="1" class="trash"><i class="fa fa-trash-o" aria-hidden="true"></i></div>
                     <div class="input" contenteditable="true"></div>
                 </div>
                 <div class="sticky-item">
-                    <div class="trash"><i class="fa fa-trash-o" aria-hidden="true"></i></div>
+                    <div data-new-list="1" class="trash"><i class="fa fa-trash-o" aria-hidden="true"></i></div>
                     <div class="input" contenteditable="true"></div>
                 </div>
                 <div class="sticky-item">
-                    <div class="trash"><i class="fa fa-trash-o" aria-hidden="true"></i></div>
+                    <div data-new-list="1" class="trash"><i class="fa fa-trash-o" aria-hidden="true"></i></div>
                     <div class="input" contenteditable="true"></div>
                 </div>
             </div>
@@ -46,7 +46,7 @@
                     </div>
                     <div class="sticky-items">
                         <%  for (int itemIndex = 0; itemIndex < userListsItems[listIndex].Rows.Count; itemIndex++) { %>
-                            <div class="sticky-item">
+                            <div class="sticky-item" data-li-id="<%: userListsItems[listIndex].Rows[itemIndex]["id"] %>">
                                 <div class="trash"><i class="fa fa-trash-o" aria-hidden="true"></i></div>
                                 <div class="input" contenteditable="true"><%= HttpUtility.HtmlEncode(userListsItems[listIndex].Rows[itemIndex]["item_content"]).Replace("\n", "<br/>").Replace(" ", "&nbsp;") %></div>
                             </div>

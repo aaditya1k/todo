@@ -57,8 +57,8 @@ $(document).ready(function () {
         e.preventDefault();
         var $this = $(this);
         var newList = ($this.data('new-list') == 1 ? true : false);
-        $this.parent().siblings('.sticky-items').prepend('<div class="sticky-item">\
-                    <div' + (newList ? ' data-new-list="1" ' : ' ') + 'class="trash"><i class="fa fa-trash-o" aria-hidden="true"></i></div>\
+        $this.parent().siblings('.sticky-items').append('<div class="sticky-item"'+(newList ? '' : ' data-li-id="0"')+'>\
+                    <div data-new-list="1" class="trash"><i class="fa fa-trash-o" aria-hidden="true"></i></div>\
                     <div class="input" contenteditable="true"></div>\
                 </div>');
     });
@@ -66,13 +66,18 @@ $(document).ready(function () {
     $(document).on('click', '.sticky-item .trash', function (e) {
         e.preventDefault();
         var $this = $(this);
-        $this.parent().remove();
+        if ($this.data('new-list') == 1) {
+            $this.parent().remove();
+        } else {
+            $this.parent().addClass('sticky-item-remove');
+        }
     });
 
     $('#create-list').click(function (e) {
         e.preventDefault();
         var $sticky = $(this).closest('.sticky');
         $sticky.addClass('disabled');
+
         var postData = {};
         postData.title = Dashboard.filterHtml($('#new-list .sticky-title .input').html());
         postData.items = {};
@@ -84,49 +89,75 @@ $(document).ready(function () {
             postData.items[i] = Dashboard.filterHtml($(this).find('.input').html());
         });
 
+        if (postData.title.length === 0) {
+            App.overlayMsg('Unable to create list, Please enter a title!', 0);
+            $sticky.removeClass('disabled');
+            return;
+        }
+
         $.ajax({
             type: 'post',
             url: '/Dashboard/Home.aspx?add-new=1',
             data: postData,
             success: function (r) {
                 if (r.status === 1) {
+                    App.overlayMsg('List successfully created!', 0);
                     window.location.reload();
+                } else {
+                    App.overlayMsg(r.msg, 0);
                 }
             }, error: function (e) {
-                alert('There was a problem, Please try again.');
+                App.overlayMsg('There was a problem, Please try again.', 0);
             }, complete: function () {
                 $sticky.removeClass('disabled');
             }
         });
     });
 
-    //$('.save-list').click(function (e) {
-    //    e.preventDefault();
-    //    var $this = $(this);
-    //    var $sticky = $(this).closest('.sticky');
-    //    $sticky.addClass('disabled');
-    //    var postData = {};
-    //    postData.title = $sticky.find('.sticky-title .input').html().replace(/<br\s*[\/]?>/gi, "\n").replace("&nbsp;", " ");
-    //    postData.items = {};
+    $('.save-list').click(function (e) {
+        e.preventDefault();
+        var $this = $(this);
+        var $sticky = $(this).closest('.sticky');
+        $sticky.addClass('disabled');
 
-    //    var stickyClassNames = $sticky.attr('class').split(' ');
-    //    postData.color = Dashboard.giveColorName(stickyClassNames);
+        var postData = {};
+        postData.title = Dashboard.filterHtml($sticky.find('.sticky-title .input').html());
+        postData.items = {};
+        postData.ids = {};
+        postData.delIds = {};
 
-    //    //$sticky.find('.sticky-items .sticky-item').each(function (i) {
-    //    //    postData.items[i] = $(this).find('.input').html().replace(/<br\s*[\/]?>/gi, "\n").replace("&nbsp;", " ");
-    //    //});
+        var stickyClassNames = $sticky.attr('class').split(' ');
+        postData.color = Dashboard.giveColorName(stickyClassNames);
 
-    //    $.ajax({
-    //        type: 'post',
-    //        url: '/Dashboard/Home.aspx?update=1&id=' + $this.data('id'),
-    //        data: postData,
-    //        success: function (r) {
-                
-    //        }, error: function (e) {
+        $sticky.find('.sticky-items .sticky-item').each(function (i) {
+            var $this = $(this);
+            postData.ids[i] = $this.data('li-id');
+            postData.items[i] = Dashboard.filterHtml($(this).find('.input').html());
+            if ($this.hasClass('sticky-item-remove')) {
+                postData.delIds[i] = $this.data('li-id');
+            }
+        });
 
-    //        }, complete: function () {
-    //            $sticky.removeClass('disabled');
-    //        }
-    //    });
-    //});
+        if (postData.title.length === 0) {
+            App.overlayMsg('Unable to save list, Please enter a title!', 0);
+            $sticky.removeClass('disabled');
+            return;
+        }
+
+        $.ajax({
+            type: 'post',
+            url: '/Dashboard/Home.aspx?update=1&id=' + $this.data('id'),
+            data: postData,
+            success: function (r) {
+                if (r.status === 1) {
+                    App.overlayMsg('List successfully saved!', 0);
+                    window.location.reload();
+                }
+            }, error: function (e) {
+                App.overlayMsg('There was a problem, Please try again.', 0);
+            }, complete: function () {
+                $sticky.removeClass('disabled');
+            }
+        });
+    });
 });

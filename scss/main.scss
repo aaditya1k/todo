@@ -115,8 +115,23 @@ input[type=text], input[type=email] , input[type=password] {
     padding: 20px;
 }
 
-.errors {
-    background: #ef5959;
+#overlay-messages {
+    position: fixed;
+    top: 65px;
+    right: 10px;
+    .success, .errors {
+        transform: translateY(-50px);
+        opacity: 0;
+        transition: transform 0.3s, opacity .28s
+    }
+}
+
+#overlay-messages .reset {
+    transform: translateY(0px);
+    opacity: 1;
+}
+
+.success, .errors {
     padding: 8px;
     font-size: 12px;
     margin: 10px 0;
@@ -126,6 +141,9 @@ input[type=text], input[type=email] , input[type=password] {
         list-style: none;
     }
 }
+
+.success {background: #67d398}
+.errors {background: #ef5959}
 
 #ContentPlaceHolder1_Login1 input[type=submit], .register input[type=submit] {
     width: 100%;

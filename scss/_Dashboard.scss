@@ -25,6 +25,9 @@
     }
     .sticky-item {
         position: relative;
+        &.sticky-item-remove {
+            display: none
+        }
         .trash {
             position: absolute;
             right: 10px;

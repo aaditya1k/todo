@@ -38,6 +38,10 @@ namespace Todo.Dashboard
                 {
                     this.Add_New();
                 }
+                else if (!String.IsNullOrWhiteSpace(Request.QueryString["update"]) && !String.IsNullOrWhiteSpace(Request.QueryString["id"]))
+                {
+                    this.Update_New();
+                }
                 else
                 {
                     Response.ContentType = "application/json; charset=utf-8";
@@ -75,6 +79,8 @@ namespace Todo.Dashboard
 
         private void Add_New()
         {
+            Response.ContentType = "application/json; charset=utf-8";
+
             List<string> items = new List<string>();
             foreach (string key in Request.Form.AllKeys)
             {
@@ -84,25 +90,138 @@ namespace Todo.Dashboard
                 }
             }
 
+            if (Request.Form["title"].Length == 0)
+            {
+                Response.Write(this.serializer.Serialize(new
+                {
+                    status = 0,
+                    message = "Unable to create list, Please enter a title!"
+                }));
+            }
+            else
+            {
+                this.con.Open();
+                SqlCommand cmd = new SqlCommand("insert into lists (user_id, list_name, list_theme, is_completed, created_at) output inserted.id values (@user_id, @list_name, @list_theme, 0, @created_at)", this.con);
+                cmd.Parameters.AddWithValue("@user_id", User.Identity.Name);
+                cmd.Parameters.AddWithValue("@list_name", Request.Form["title"].Trim());
+                cmd.Parameters.AddWithValue("@list_theme", Request.Form["color"].Trim());
+                cmd.Parameters.AddWithValue("@created_at", DateTime.Now);
+                int newId = (Int32)cmd.ExecuteScalar();
+
+                if (newId > 0)
+                {
+                    foreach (var a in items)
+                    {
+                        cmd = new SqlCommand("insert into list_items (list_id, item_content, is_completed, created_at) values (@list_id, @item_content,0, @created_at)", this.con);
+                        cmd.Parameters.AddWithValue("@list_id", newId);
+                        cmd.Parameters.AddWithValue("@item_content", Request.Form[a].Trim());
+                        cmd.Parameters.AddWithValue("@created_at", DateTime.Now);
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    Response.Write(this.serializer.Serialize(new
+                    {
+                        status = 1
+                    }));
+                }
+                else
+                {
+                    Response.Write(this.serializer.Serialize(new
+                    {
+                        status = 0,
+                        message = "Something went wrong: " + newId
+                    }));
+                }
+
+                this.con.Close();
+            }
+
+            Response.End();
+        }
+
+        private void Update_New()
+        {
             Response.ContentType = "application/json; charset=utf-8";
 
-            this.con.Open();
-            SqlCommand cmd = new SqlCommand("insert into lists (user_id, list_name, list_theme, is_completed, created_at) output inserted.id values (@user_id, @list_name, @list_theme, 0, @created_at)", this.con);
-            cmd.Parameters.AddWithValue("@user_id", User.Identity.Name);
-            cmd.Parameters.AddWithValue("@list_name", Request.Form["title"].Trim());
-            cmd.Parameters.AddWithValue("@list_theme", Request.Form["color"].Trim());
-            cmd.Parameters.AddWithValue("@created_at", DateTime.Now);
-            int newId = (Int32)cmd.ExecuteScalar();
-
-            if (newId > 0)
+            List<string> items = new List<string>();
+            List<string> ids = new List<string>();
+            List<string> delIds = new List<string>();
+            foreach (string key in Request.Form.AllKeys)
             {
-                foreach (var a in items)
+                if (key.StartsWith("items"))
                 {
-                    cmd = new SqlCommand("insert into list_items (list_id, item_content, is_completed, created_at) values (@list_id, @item_content,0, @created_at)", this.con);
-                    cmd.Parameters.AddWithValue("@list_id", newId);
-                    cmd.Parameters.AddWithValue("@item_content", Request.Form[a].Trim());
-                    cmd.Parameters.AddWithValue("@created_at", DateTime.Now);
-                    cmd.ExecuteNonQuery();
+                    items.Add(key);
+                }
+                else if (key.StartsWith("ids"))
+                {
+                    ids.Add(key);
+                }
+                else if (key.StartsWith("delIds"))
+                {
+                    delIds.Add(key);
+                }
+            }
+
+            int itemsLength = items.ToArray().Length;
+
+            if (itemsLength != ids.ToArray().Length)
+            {
+                Response.Write(this.serializer.Serialize(new
+                {
+                    status = 0,
+                    message = "Something went wrong, Please try again."
+                }));
+            }
+            else
+            {
+                this.con.Open();
+
+                SqlCommand cmd = new SqlCommand("update lists set list_name=@list_name, list_theme=@list_theme where id=@id and user_id=@user_id", this.con);
+                cmd.Parameters.AddWithValue("@list_name", Request.Form["title"].Trim());
+                cmd.Parameters.AddWithValue("@list_theme", Request.Form["color"].Trim());
+                cmd.Parameters.AddWithValue("@id", Request.QueryString["id"]);
+                cmd.Parameters.AddWithValue("@user_id", User.Identity.Name);
+                cmd.ExecuteScalar();
+
+                int delLength = delIds.ToArray().Length;
+
+                for (int i = 0; i < itemsLength; i++)
+                {
+                    string id = Request.Form[ids.ElementAt(i)];
+
+                    if (id == "0")
+                    {
+                        cmd = new SqlCommand("insert into list_items (list_id, item_content, is_completed, created_at) values (@list_id, @item_content, @is_completed, @created_at)", this.con);
+                        cmd.Parameters.AddWithValue("@list_id", Request.QueryString["id"]);
+                        cmd.Parameters.AddWithValue("@item_content", Request.Form[items.ElementAt(i)]);
+                        cmd.Parameters.AddWithValue("@is_completed", 0);
+                        cmd.Parameters.AddWithValue("@created_at", DateTime.Now);
+                        cmd.ExecuteScalar();
+                    }
+                    else
+                    {
+                        Boolean deleted = false;
+                        for (int j = 0; j < delLength; j++)
+                        {
+                            if (Request.Form[delIds.ElementAt(j)] == id)
+                            {
+                                cmd = new SqlCommand("delete from list_items where list_id=@list_id and id=@id", this.con);
+                                cmd.Parameters.AddWithValue("@list_id", Request.QueryString["id"]);
+                                cmd.Parameters.AddWithValue("@id", id);
+                                cmd.ExecuteScalar();
+                                deleted = true;
+                                break;
+                            }
+                        }
+                        if (!deleted)
+                        {
+                            cmd = new SqlCommand("update list_items set item_content=@item_content where list_id=@list_id and id=@id", this.con);
+                            cmd.Parameters.AddWithValue("@item_content", Request.Form[items.ElementAt(i)]);
+                            cmd.Parameters.AddWithValue("@list_id", Request.QueryString["id"]);
+                            cmd.Parameters.AddWithValue("@id", id);
+                            cmd.ExecuteScalar();
+                        }
+                    }
                 }
 
                 Response.Write(this.serializer.Serialize(new
@@ -110,16 +229,7 @@ namespace Todo.Dashboard
                     status = 1
                 }));
             }
-            else
-            {
-                Response.Write(this.serializer.Serialize(new
-                {
-                    status = 0,
-                    message = "Something went wrong: " + newId
-                }));
-            }
 
-            this.con.Close();
             Response.End();
         }
     }
