@@ -13,6 +13,11 @@ using System.Collections;
 
 namespace Todo.Dashboard
 {
+
+    /**
+     * Need to validate list_theme in Add_New and Update_list
+     */
+
     public partial class Home : System.Web.UI.Page
     {
         private SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["MyDbConn"].ToString());
@@ -40,7 +45,11 @@ namespace Todo.Dashboard
                 }
                 else if (!String.IsNullOrWhiteSpace(Request.QueryString["update"]) && !String.IsNullOrWhiteSpace(Request.QueryString["id"]))
                 {
-                    this.Update_New();
+                    this.Update_List();
+                }
+                else if (!String.IsNullOrWhiteSpace(Request.QueryString["delete"]) && !String.IsNullOrWhiteSpace(Request.QueryString["id"]))
+                {
+                    this.Delete_List();
                 }
                 else
                 {
@@ -101,7 +110,7 @@ namespace Todo.Dashboard
             else
             {
                 this.con.Open();
-                SqlCommand cmd = new SqlCommand("insert into lists (user_id, list_name, list_theme, is_completed, created_at) output inserted.id values (@user_id, @list_name, @list_theme, 0, @created_at)", this.con);
+                SqlCommand cmd = new SqlCommand("insert into lists (user_id, list_name, list_theme, created_at) output inserted.id values (@user_id, @list_name, @list_theme, @created_at)", this.con);
                 cmd.Parameters.AddWithValue("@user_id", User.Identity.Name);
                 cmd.Parameters.AddWithValue("@list_name", Request.Form["title"].Trim());
                 cmd.Parameters.AddWithValue("@list_theme", Request.Form["color"].Trim());
@@ -112,7 +121,7 @@ namespace Todo.Dashboard
                 {
                     foreach (var a in items)
                     {
-                        cmd = new SqlCommand("insert into list_items (list_id, item_content, is_completed, created_at) values (@list_id, @item_content,0, @created_at)", this.con);
+                        cmd = new SqlCommand("insert into list_items (list_id, item_content, created_at) values (@list_id, @item_content, @created_at)", this.con);
                         cmd.Parameters.AddWithValue("@list_id", newId);
                         cmd.Parameters.AddWithValue("@item_content", Request.Form[a].Trim());
                         cmd.Parameters.AddWithValue("@created_at", DateTime.Now);
@@ -139,7 +148,7 @@ namespace Todo.Dashboard
             Response.End();
         }
 
-        private void Update_New()
+        private void Update_List()
         {
             Response.ContentType = "application/json; charset=utf-8";
 
@@ -176,7 +185,25 @@ namespace Todo.Dashboard
             {
                 this.con.Open();
 
-                SqlCommand cmd = new SqlCommand("update lists set list_name=@list_name, list_theme=@list_theme where id=@id and user_id=@user_id", this.con);
+                DataTable lists = new DataTable();
+
+                SqlCommand cmd = new SqlCommand("select * from lists where id=@id and user_id=@user_id", this.con);
+                cmd.Parameters.AddWithValue("@id", Request.QueryString["id"]);
+                cmd.Parameters.AddWithValue("@user_id", User.Identity.Name);
+                da.SelectCommand = cmd;
+                da.Fill(lists);
+                
+                if (lists.Rows.Count == 0)
+                {
+                    Response.Write(this.serializer.Serialize(new
+                    {
+                        status = 0,
+                        message = "Something went wrong, Please try again."
+                    }));
+                    return;
+                }
+
+                cmd = new SqlCommand("update lists set list_name=@list_name, list_theme=@list_theme where id=@id and user_id=@user_id", this.con);
                 cmd.Parameters.AddWithValue("@list_name", Request.Form["title"].Trim());
                 cmd.Parameters.AddWithValue("@list_theme", Request.Form["color"].Trim());
                 cmd.Parameters.AddWithValue("@id", Request.QueryString["id"]);
@@ -191,10 +218,9 @@ namespace Todo.Dashboard
 
                     if (id == "0")
                     {
-                        cmd = new SqlCommand("insert into list_items (list_id, item_content, is_completed, created_at) values (@list_id, @item_content, @is_completed, @created_at)", this.con);
+                        cmd = new SqlCommand("insert into list_items (list_id, item_content, created_at) values (@list_id, @item_content, @created_at)", this.con);
                         cmd.Parameters.AddWithValue("@list_id", Request.QueryString["id"]);
                         cmd.Parameters.AddWithValue("@item_content", Request.Form[items.ElementAt(i)]);
-                        cmd.Parameters.AddWithValue("@is_completed", 0);
                         cmd.Parameters.AddWithValue("@created_at", DateTime.Now);
                         cmd.ExecuteScalar();
                     }
@@ -232,5 +258,47 @@ namespace Todo.Dashboard
 
             Response.End();
         }
+
+        private void Delete_List()
+        {
+            Response.ContentType = "application/json; charset=utf-8";
+
+            this.con.Open();
+            DataTable lists = new DataTable();
+
+            SqlCommand cmd = new SqlCommand("select * from lists where id=@id and user_id=@user_id", this.con);
+            cmd.Parameters.AddWithValue("@id", Request.QueryString["id"]);
+            cmd.Parameters.AddWithValue("@user_id", User.Identity.Name);
+            da.SelectCommand = cmd;
+            da.Fill(lists);
+
+            if (lists.Rows.Count == 0)
+            {
+                Response.Write(this.serializer.Serialize(new
+                {
+                    status = 0,
+                    message = "Something went wrong, Please try again."
+                }));
+                Response.End();
+                return;
+            }
+
+            cmd = new SqlCommand("delete from lists where id=@id", this.con);
+            cmd.Parameters.AddWithValue("@id", Request.QueryString["id"]);
+            cmd.ExecuteScalar();
+
+            cmd = new SqlCommand("delete from list_items where list_id=@list_id", this.con);
+            cmd.Parameters.AddWithValue("@list_id", Request.QueryString["id"]);
+            cmd.ExecuteScalar();
+
+            this.con.Close();
+
+            Response.Write(this.serializer.Serialize(new
+            {
+                status = 1
+            }));
+            Response.End();
+        }
     }
 }
+ 

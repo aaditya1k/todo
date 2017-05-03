@@ -101,7 +101,7 @@ $(document).ready(function () {
             data: postData,
             success: function (r) {
                 if (r.status === 1) {
-                    App.overlayMsg('List successfully created!', 0);
+                    App.overlayMsg('List successfully created!', 1);
                     window.location.reload();
                 } else {
                     App.overlayMsg(r.msg, 0);
@@ -146,15 +146,36 @@ $(document).ready(function () {
 
         $.ajax({
             type: 'post',
-            url: '/Dashboard/Home.aspx?update=1&id=' + $this.data('id'),
+            url: '/Dashboard/Home.aspx?update=1&id=' + $sticky.data('id'),
             data: postData,
             success: function (r) {
                 if (r.status === 1) {
-                    App.overlayMsg('List successfully saved!', 0);
+                    App.overlayMsg('List successfully saved!', 1);
                     window.location.reload();
                 }
             }, error: function (e) {
                 App.overlayMsg('There was a problem, Please try again.', 0);
+            }, complete: function () {
+                $sticky.removeClass('disabled');
+            }
+        });
+    });
+
+    $('.delete-list').click(function (e) {
+        e.preventDefault();
+        var $this = $(this);
+        var $sticky = $(this).closest('.sticky');
+        $sticky.addClass('disabled');
+
+        $.ajax({
+            type: 'post',
+            url: '/Dashboard/Home.aspx?delete=1&id=' + $sticky.data('id'),
+            success: function (r) {
+                if (r.status === 1) {
+                    window.location.reload();
+                }
+            }, error: function (e) {
+                App.overlayMsg('There was a problem when deleting a list, Please try again.', 0);
             }, complete: function () {
                 $sticky.removeClass('disabled');
             }

@@ -39,7 +39,9 @@
 
         <div id="lists" class="clear">
         <% for (int listIndex = 0; listIndex < userLists.Rows.Count; listIndex++) { %>
-            <div class="sticky sticky-th-<%= HttpUtility.HtmlEncode(userLists.Rows[listIndex]["list_theme"]).Replace("\n", "<br/>").Replace(" ", "&nbsp;") %>">
+            <div
+                data-id="<%: userLists.Rows[listIndex]["id"] %>"
+                class="sticky sticky-th-<%= HttpUtility.HtmlEncode(userLists.Rows[listIndex]["list_theme"]).Replace("\n", "<br/>").Replace(" ", "&nbsp;") %>">
                     <div class="sticky-title">
                         <a href="#" class="add-items"><i class="fa fa-plus" aria-hidden="true"></i></a>
                         <div class="input" contenteditable="true"><%: userLists.Rows[listIndex]["list_name"] %></div>
@@ -58,7 +60,8 @@
                                 <a href="#" class="slcl-<%: availableColors[j] %>"></a>
                             <% } %>
                         </div>
-                        <a href="#" data-id="<%: userLists.Rows[listIndex]["id"] %>" class="save-list button">SAVE</a>
+                        <a href="#" class="save-list button">SAVE</a>
+                        <a href="#" class="delete-list button" title="Permanent Delete"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
                     </div>
                 </div>
         <% } %>
