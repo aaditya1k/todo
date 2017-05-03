@@ -3,6 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title><%: !String.IsNullOrEmpty(Page.Title) ? Page.Title + " - " : null %>Todo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="shortcut icon" type="image/png" href="/images/logo.png" />
     <link rel="stylesheet" href="/build/main.css" type="text/css" />
     <asp:ContentPlaceHolder ID="head" runat="server"></asp:ContentPlaceHolder>

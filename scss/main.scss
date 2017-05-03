@@ -87,7 +87,7 @@ input[type=text], input[type=email] , input[type=password] {
 
 .mid-form {
     margin: 0 auto;
-    width: 500px;
+    max-width: 500px;
     background: #fff;
     box-shadow: 0 0 3px #b2b2b2;
     margin-top: 5%;
@@ -105,9 +105,12 @@ input[type=text], input[type=email] , input[type=password] {
     .form-label {
         float: left;
         line-height: 34px;
-        width: 200px;
+        width: 50%;
         text-align: right;
         margin-right: 10px;
+        input[type=text], input[type=email], input[type=password] {
+            width: 40%;
+        }
     }
 }
 
@@ -150,6 +153,158 @@ input[type=text], input[type=email] , input[type=password] {
     height: 40px;
 }
 
+.home {
+    .bold-line {
+        color: #fff;
+        font-size: 42px;
+        line-height: 42px;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+    .light-line {
+        font-size: 24px;
+        color: #fff;
+        line-height: 24px;
+        margin: 20px 0;
+    }
+
+    .spotlight {
+        background: url(../images/bg.jpg);
+        height: 600px;
+        background-size: cover;
+        .content {
+            height: 600px;
+        }
+        .bold-line {
+            padding-top: 30%;
+        }
+        .button {
+            padding: 12px 15px;
+            margin-top: 20px;
+            display: block;
+            float: left;
+        }
+    }
+    .content {
+        width: 800px;
+        margin: 0 auto;
+    }
+    .features {
+        background: #04172f;
+        .content {
+            padding: 30px;
+        }
+        .access .access-icon {
+            display: inline-block;
+            text-align: center;
+            border: 1px solid #727272;
+            padding: 40px 0;
+            width: 150px;
+            margin: 0 20px;
+            border-radius: 50%;
+            &:hover {
+                background: #495666;
+            }
+        }
+
+        .access {
+            text-align: center;
+        }
+
+        .access-icon .fa {
+            font-size: 40px;
+            color: #fff;
+            border-radius: 50%;
+        }
+
+        .access-icon .label {
+            color: #fff;
+            font-size: 20px;
+            margin-top: 10px;
+        }
+        .features .light-line {font-size: 20px;color: #ffffff;}
+        .features .bold-line {
+            font-size: 24px;
+        }
+    }
+    .social-access {
+        background: #14171e;
+        .content {
+            padding: 20px;
+        }
+        .social-icons {
+            text-align: center;
+            a {
+                display: inline-block;
+                margin: 0 10px;
+            }
+            .fa {
+                font-size: 24px;
+                color: #fff;
+            }
+        }
+        .content .bold-line {
+            font-size: 24px;
+            color: #eaeaea;
+        }
+    }
+}
+
 @import '_Login.scss';
 @import '_Dashboard.scss';
 @import 'inc/font-awesome.min.scss';
+
+@media (max-width: 800px)
+{
+    #lists .sticky {
+        width: 45%;
+    }
+}
+
+@media (max-width: 500px)
+{
+    .mid-form {
+        margin-top: 20px;
+        border-radius: 0;
+    }
+    #header {
+        text-align: center;
+        height: auto;
+    }
+    .logo {
+        float: none;
+        display: block;
+    }
+    .nav {
+        float: none;
+        display: block;
+        padding-left: 0;
+        margin: 10px 0 15px 0;
+        li {
+            float: none;
+            display: inline-block;
+            line-height: 30px;
+            a {
+                margin: 0 5px;
+            }
+        }
+    }
+    .form-row .form-label {
+        text-align: left;
+    }
+    .register .form-title {
+        margin-top: 20px;
+    }
+}
+
+@media (max-width: 420px)
+{
+    #new-list {
+        width: auto;
+        margin: 0 auto 35px auto;
+    }
+    #lists .sticky {
+        width: 100%;
+        margin-right: 0;
+    }
+}
